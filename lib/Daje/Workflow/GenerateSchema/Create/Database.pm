@@ -40,7 +40,7 @@ sub _dbname($self) {
     my $len = 8;
     my $string;
     while($len--){ $string .= $chars[rand @chars] };
-
+    $string = lc($string);
     $self->dbname($string);
 
 }
