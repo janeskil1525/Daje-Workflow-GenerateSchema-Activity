@@ -38,7 +38,7 @@ use Mojo::Pg;
 #
 #
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 has 'pg';
 has 'dbname';
@@ -47,8 +47,8 @@ sub process ($self) {
 
     $self->_create_database();
     my $schema = $self->_load_db_schema();
-    my $json = $self->_build_json($schema);
-    $self->_save_json($json);
+
+    $self->_save_json($schema);
 
     return 1;
 }
@@ -74,16 +74,13 @@ sub _load_db_schema($self) {
     return $dbschema;
 }
 
-sub _build_json($self, $schema) {
-    my $json = to_json($schema);
+sub _save_json($self, $schema) {
 
-    return $json;
-}
-
-sub _save_json($self, $json) {
-
-    $self->context->{context}->{schema} = $json
-
+    my $data->{data} = to_json($schema);
+    $data->{file} = "schema";
+    my @data;
+    push(@data, $data);
+    $self->context->{context}->{schema} = \@data;
 }
 
 1;
