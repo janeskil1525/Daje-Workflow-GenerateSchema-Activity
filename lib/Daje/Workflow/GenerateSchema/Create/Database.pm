@@ -14,7 +14,7 @@ sub create($self){
     $self->_connect($self->dbname());
 
     my $default = $self->_get_defaults();
-    $self->db->query($default);
+    $self->pg->db->query($default);
 
     my $sql = $self->context->{context}->{sql};
     my $length = scalar @{$sql};
